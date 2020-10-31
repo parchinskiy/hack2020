@@ -2,20 +2,24 @@ import React, {useEffect, useState,} from 'react';
 import { Container } from 'reactstrap';
 import { Route, Switch, NavLink } from 'react-router-dom';
 import cx from 'classnames';
-import { useStore } from 'effector-react';
+import { useStore, useGate } from 'effector-react';
 import Card from './Card/Card';
 
-import { $books, fetchBooksFx } from '../src/models/index';
+import { $booksRecommended, fetchBooksFx, fetchPopularBooksFx, $booksPopular, booksGate, $currentEvents, fetchEventsFx } from '../src/models/index';
 
 import styles from './App.module.css';
 
 const App = () => {
+  useGate(booksGate);
   const [userReaderId, setUserReaderId] = useState('');
   const [userEventId, setUserEventId] = useState('');
   const [settedReaderId, setSettedReaderId] = useState('');
   const [settedEventId, setSettedEventId] = useState('');
 
-  const {data: books} = useStore($books);
+  const {data: books} = useStore($booksRecommended);
+  const popularBooks = useStore($booksPopular);
+  const currentEvents = useStore($currentEvents);
+  console.log(currentEvents);
 
   const handleInputChange = (setFunction) => ({ target: { value }}) => {
     setFunction(value);
@@ -24,19 +28,30 @@ const App = () => {
   const handleSubmit = () => {
     if (userReaderId && userEventId) {
       setSettedReaderId(userReaderId);
-    setSettedEventId(userEventId);
+      setSettedEventId(userEventId);
     } 
   };
   
   const handleSignOut = () => {
     setSettedReaderId('');
+    setSettedEventId('');
   };
 
   useEffect(() => {
-    settedEventId && settedReaderId && fetchBooksFx({
+    if (settedEventId && settedReaderId) {
+      fetchBooksFx({
       readerId: settedReaderId,
       eventId: settedEventId 
     });
+    fetchPopularBooksFx({
+      readerId: settedReaderId,
+      eventId: settedEventId
+    });
+    fetchEventsFx({
+      readerId: settedReaderId,
+      eventId: settedEventId
+    });
+  }
   }, [settedReaderId, settedEventId])
 
   return (
@@ -51,12 +66,12 @@ const App = () => {
               <input className={styles.loginInput} placeholder={'User Event ID'} onChange={handleInputChange(setUserEventId)} value={userEventId} />
               <button onClick={handleSubmit} className={styles.loginSubmitButton}>Submit</button>
             </div>)}
-            {settedReaderId && settedEventId && (<AppBody userId={settedReaderId} handleSignOut={handleSignOut} books={books}/>)}
+            {settedReaderId && settedEventId && (<AppBody userId={settedReaderId} handleSignOut={handleSignOut} books={books} popularBooks={popularBooks} events={currentEvents}/>)}
         </Container>
   );
 }
 
-const AppBody = ({ userId, handleSignOut, books }) => {
+const AppBody = ({ userId, handleSignOut, books, popularBooks, events }) => {
     return (
       <>
         <div className={styles.header}>
@@ -70,6 +85,9 @@ const AppBody = ({ userId, handleSignOut, books }) => {
             <NavLink to='/clubs' activeClassName  ={styles.menuNavLinkActive} className={styles.menuNavLink}>
                               <span className={styles.linkText}>Clubs</span>
             </NavLink>
+            <NavLink to='/popular-books' activeClassName  ={styles.menuNavLinkActive} className={styles.menuNavLink}>
+                              <span className={styles.linkText}>Popular books</span>
+            </NavLink>
           </div>
           <div className={styles.userBlock}>
             <span>Welcome, {userId}</span>
@@ -79,14 +97,33 @@ const AppBody = ({ userId, handleSignOut, books }) => {
         <div className={styles.mainBody}>
           <Switch>
                         <Route exact path='/'>
-                          <div className={styles.booksBlock}>
+                          <div className={styles.mainBlock}>
                             <h2>Рекомендованные книги</h2>
                             <div className={styles.bookRow}>{books?.slice(0,3).map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc}/>)}</div>
                           </div>
+                          <div className={styles.mainBlock}>
+                            <h2>Популярные книги</h2>
+                            <div className={styles.bookRow}>{popularBooks?.slice(0,3).map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc}/>)}</div>
+                          </div>
+                          <div className={styles.mainBlock}>
+                            <h2>Текущие мероприятия</h2>
+                            <div className={styles.bookRow}>{events?.slice(0,3).map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc}/>)}</div>
+                          </div>
                         </Route>
                         <Route exact path='/books'>
+                          <div className={styles.booksTable}>
+                            {books?.map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc} />)} 
+                          </div>
                         </Route>
                         <Route exact path='/events'>
+                        <div className={styles.booksTable}>
+                            {events?.map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc} />)} 
+                          </div>
+                        </Route>
+                        <Route exact path='/popular-books'>
+                        <div className={styles.booksTable}>
+                            {popularBooks?.map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc} />)} 
+                          </div>
                         </Route>
                         <Route exact path='/clubs'>
                         </Route>

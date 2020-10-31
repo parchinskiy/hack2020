@@ -2,7 +2,7 @@
   display: grid;
   place-items: center;
 
-  width: 100vw;
+  width: 100wh;
   height: 100vh;
 
   box-sizing: border-box;
@@ -20,8 +20,8 @@
 
   align-items: center;
 
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   animation: backgroundLogin 1s ease;
 
   background: linear-gradient(180deg, rgba(235,143,143,1) 0%, rgba(241,243,222,1) 100%);
@@ -49,8 +49,8 @@
 
   color: rgba(235,143,143,1);
 
-  animation: appear 1s ease;
-  animation-iteration-count: 1;
+  animation: backInUp;
+  animation-duration: 1s;
 }
 
 .loginInput {
@@ -103,20 +103,20 @@
 @keyframes appear {
   0% {position: absolute;
     bottom: 0px;
-    left: 37.5%;
+    left: 38.5%;
     opacity: .1;
   }
   60% {
     position: absolute;
     bottom: 50%;
-    left: 37.5%;
+    left: 38.5%;
     opacity: .5;
   }
   100% {
     position: absolute;
     opacity: 1;
     bottom: 33.3%;
-    left: 37.5%;
+    left: 38.5%;
   }
 }
 
@@ -230,11 +230,9 @@
   justify-items: flex-start;
 }
 
-.booksBlock {
+.mainBlock {
  display: flex; 
  flex-direction: column;
-
-
 }
 
 .bookRow {
@@ -242,4 +240,9 @@
   flex-direction: row;
 
   justify-content: space-between;
+}
+
+.booksTable {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
