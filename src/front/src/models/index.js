@@ -16,3 +16,7 @@ export const fetchPopularBooksFx = createEffect();
 export const $currentEvents = createStore([]);
 
 export const fetchEventsFx = createEffect([]);
+
+export const $clubs = createStore([]);
+
+export const fetchClubsFx = createEffect();
