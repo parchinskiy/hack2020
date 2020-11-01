@@ -14,6 +14,9 @@ const Card = ({ name, imageUrl, desc }) => {
         </div>
         <div className={styles.infoWrapper}>
             <p class="">22&nbsp;октября&nbsp;2020&nbsp;г. 17:49</p>
+            <div className={styles.eye}>
+
+            </div>
             <p class="">500</p>
         </div>
     </div>

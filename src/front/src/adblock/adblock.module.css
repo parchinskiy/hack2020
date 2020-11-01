@@ -1,12 +1,57 @@
 
 .recomendBlockWrapper {
     padding: 10px;
+    margin-bottom: 70px;
     width:60%;
 }
 
 .recomendBlock {
     height:250px;
     background: linear-gradient(to top, #4BA0EE 50%, #76BAF1 100%);
-    display: flex;
     border-radius: 10px;
+}
+
+.booksBlock {
+    display: flex;
+    position: relative;
+}
+
+.bookItem {
+    position: relative;
+    width: 125px;
+    margin: 15px;
+}
+
+.bookItem img {
+    position: absolute;
+    top: 10px;
+    left: 25px;
+    width: 125px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.recomendBlockTitle {
+    color: white;
+    font-size: 34px;
+    margin: 0px;
+    right: 8px;
+    padding: 20px 70px 0px 0px;
+    text-align: right;
+}
+
+.moreButton:hover{
+    color: #4BA0EE;
+    background-color: white;
+    cursor: pointer;
+}
+
+.moreButton {
+    border: 1px solid white;
+    position: relative;
+    border-radius: 10px;
+    left: calc(65%);
+    width: 25%;
+    text-align: center;
+    padding: 20px 20px;
+    color: white;
 }

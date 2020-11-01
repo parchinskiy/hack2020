@@ -2,21 +2,25 @@ import React, {useEffect, useState,} from 'react';
 import { Container } from 'reactstrap';
 import { Route, Switch, NavLink } from 'react-router-dom';
 import cx from 'classnames';
-import { useStore } from 'effector-react';
+import { useStore, useGate } from 'effector-react';
 import Card from './Card/Card';
 
-import { $books, fetchBooksFx } from '../src/models/index';
+import { $booksRecommended, fetchBooksFx, fetchPopularBooksFx, $booksPopular, booksGate, $currentEvents, fetchEventsFx, fetchClubsFx, $clubs } from '../src/models/index';
 
 import styles from './App.module.css';
 import AdBlock from './adblock/adblock';
 
 const App = () => {
+  useGate(booksGate);
   const [userReaderId, setUserReaderId] = useState('');
   const [userEventId, setUserEventId] = useState('');
   const [settedReaderId, setSettedReaderId] = useState('');
   const [settedEventId, setSettedEventId] = useState('');
 
-  const {data: books} = useStore($books);
+  const {data: books} = useStore($booksRecommended);
+  const popularBooks = useStore($booksPopular);
+  const currentEvents = useStore($currentEvents);
+  const clubs = useStore($clubs);
 
   const handleInputChange = (setFunction) => ({ target: { value }}) => {
     setFunction(value);
@@ -25,19 +29,34 @@ const App = () => {
   const handleSubmit = () => {
     if (userReaderId && userEventId) {
       setSettedReaderId(userReaderId);
-    setSettedEventId(userEventId);
+      setSettedEventId(userEventId);
     }
   };
 
   const handleSignOut = () => {
     setSettedReaderId('');
+    setSettedEventId('');
   };
 
   useEffect(() => {
-    settedEventId && settedReaderId && fetchBooksFx({
+    if (settedEventId && settedReaderId) {
+      fetchBooksFx({
       readerId: settedReaderId,
       eventId: settedEventId
-    });
+      });
+      fetchPopularBooksFx({
+        readerId: settedReaderId,
+        eventId: settedEventId
+      });
+      fetchEventsFx({
+        readerId: settedReaderId,
+        eventId: settedEventId
+      });
+      fetchClubsFx({
+        readerId: settedReaderId,
+        eventId: settedEventId
+      });
+    }
   }, [settedReaderId, settedEventId])
 
   return (
@@ -52,12 +71,12 @@ const App = () => {
               <input className={styles.loginInput} placeholder={'User Event ID'} onChange={handleInputChange(setUserEventId)} value={userEventId} />
               <button onClick={handleSubmit} className={styles.loginSubmitButton}>Submit</button>
             </div>)}
-            {settedReaderId && settedEventId && (<AppBody userId={settedReaderId} handleSignOut={handleSignOut} books={books}/>)}
+            {settedReaderId && settedEventId && (<AppBody userId={settedReaderId} handleSignOut={handleSignOut} books={books} popularBooks={popularBooks} events={currentEvents} clubs={clubs}/>)}
         </Container>
   );
 }
 
-const AppBody = ({ userId, handleSignOut, books }) => {
+const AppBody = ({ userId, handleSignOut, books, popularBooks, events, clubs }) => {
     return (
       <>
         <div className={styles.header}>
@@ -70,6 +89,9 @@ const AppBody = ({ userId, handleSignOut, books }) => {
             </NavLink>
             <NavLink to='/clubs' activeClassName  ={styles.menuNavLinkActive} className={styles.menuNavLink}>
                               <span className={styles.linkText}>Clubs</span>
+            </NavLink>
+            <NavLink to='/popular-books' activeClassName  ={styles.menuNavLinkActive} className={styles.menuNavLink}>
+                              <span className={styles.linkText}>Popular books</span>
             </NavLink>
           </div>
           <div className={styles.searchWrapper}>
@@ -86,17 +108,47 @@ const AppBody = ({ userId, handleSignOut, books }) => {
                         <Route exact path='/'>
                           <div className={styles.booksBlock}>
                             <div className={styles.recomenTitleWrapper}>
-                              <div className={styles.recomenTitle}><h2>Рекомендованные книги</h2></div>
+                              <div className={styles.recomenTitle}><p className={styles.recomend}>Рекомендованные книги</p></div>
                               <a href="">СМОТРЕТЬ ВСЕ</a>
                             </div>
                             <div className={styles.bookRow}>{books?.slice(0,3).map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc}/>)}</div>
                           </div>
+                          <div className={styles.booksBlock}>
+                            <div className={styles.recomenTitleWrapper}>
+                              <div className={styles.recomenTitle}><p className={styles.recomend}>Популярные книги</p></div>
+                              <a href="">СМОТРЕТЬ ВСЕ</a>
+                              </div>
+                              <div className={styles.bookRow}>{popularBooks?.slice(0,3).map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc}/>)}</div>
+
+                          </div>
+                          <div className={styles.booksBlock}>
+                          <div className={styles.recomenTitleWrapper}>
+                            <div className={styles.recomenTitle}><p className={styles.recomend}>Текущие мероприятия</p></div>
+                            <a href="">СМОТРЕТЬ ВСЕ</a>
+                            </div>
+                            <div className={styles.bookRow}>{events?.slice(0,3).map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc}/>)}</div>
+
+                          </div>
                         </Route>
                         <Route exact path='/books'>
+                          <div className={styles.booksTable}>
+                            {books?.map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc} />)}
+                          </div>
                         </Route>
                         <Route exact path='/events'>
+                          <div className={styles.booksTable}>
+                            {events?.map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc} />)}
+                          </div>
+                        </Route>
+                        <Route exact path='/popular-books'>
+                          <div className={styles.booksTable}>
+                            {popularBooks?.map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc} />)}
+                          </div>
                         </Route>
                         <Route exact path='/clubs'>
+                          <div className={styles.booksTable}>
+                            {clubs?.map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc} />)}
+                          </div>
                         </Route>
           </Switch>
         </div>
