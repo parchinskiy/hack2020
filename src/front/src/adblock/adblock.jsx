@@ -15,10 +15,13 @@ const AdBlock = ({ name, imageUrl, desc }) => {
                         <img src="https://cv3.litres.ru/pub/c/elektronnaya-kniga/cover_415/57290936-viktor-pelevin-nepobedimoe-solnce-kniga-2.jpg" alt=""/>
                     </div>
                     <div className={styles.bookItem}>
-                        <img src="https://cv3.litres.ru/pub/c/elektronnaya-kniga/cover_415/57290936-viktor-pelevin-nepobedimoe-solnce-kniga-2.jpg" alt=""/>
+                        <img src="https://cv7.litres.ru/pub/c/elektronnaya-kniga/cover_415/4236675-ayn-rend-atlant-raspravil-plechi.jpg" alt=""/>
                     </div>
                     <div className={styles.bookItem}>
-                        <img src="https://cv3.litres.ru/pub/c/elektronnaya-kniga/cover_415/57290936-viktor-pelevin-nepobedimoe-solnce-kniga-2.jpg" alt=""/>
+                        <img src="https://cv2.litres.ru/pub/c/elektronnaya-kniga/cover_415/62194227-u-nesbe-korolevstvo.jpg" alt=""/>
+                    </div>
+                    <div className={styles.bookItem}>
+                        <img src="https://cv7.litres.ru/pub/c/elektronnaya-kniga/cover_415/2548775-marina-stepnova-zhenschiny-lazarya.jpg" alt=""/>
                     </div>
                 </div>
                 <div className={styles.moreButton}><strong>О персональных рекомендациях</strong></div>

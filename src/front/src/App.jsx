@@ -65,11 +65,11 @@ const App = () => {
           [styles.App]: settedReaderId
         })}>
             {!settedReaderId && !settedEventId && (<div className={styles.loginForm}>
-              <h1>Welcome!</h1>
+              <h1>Привет!</h1>
               <span>Enter user ID to get recommendations</span>
               <input className={styles.loginInput} placeholder={'User Reader ID'} onChange={handleInputChange(setUserReaderId)} value={userReaderId} />
               <input className={styles.loginInput} placeholder={'User Event ID'} onChange={handleInputChange(setUserEventId)} value={userEventId} />
-              <button onClick={handleSubmit} className={styles.loginSubmitButton}>Submit</button>
+              <button onClick={handleSubmit} className={styles.loginSubmitButton}>Войти</button>
             </div>)}
             {settedReaderId && settedEventId && (<AppBody userId={settedReaderId} handleSignOut={handleSignOut} books={books} popularBooks={popularBooks} events={currentEvents} clubs={clubs}/>)}
         </Container>
@@ -109,7 +109,7 @@ const AppBody = ({ userId, handleSignOut, books, popularBooks, events, clubs }) 
                           <div className={styles.booksBlock}>
                             <div className={styles.recomenTitleWrapper}>
                               <div className={styles.recomenTitle}><p className={styles.recomend}>Рекомендованные книги</p></div>
-                              <a href="">СМОТРЕТЬ ВСЕ</a>
+                              <a href="/books">СМОТРЕТЬ ВСЕ</a>
                             </div>
                             <div className={styles.bookRow}>{books?.slice(0,3).map(({ img_url, name, desc }) => <Card imageUrl={img_url} name={name} desc={desc}/>)}</div>
                           </div>

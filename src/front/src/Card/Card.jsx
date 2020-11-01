@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './Card.module.css';
-import favor from '../img/favor.svg'
+import eye from '../img/eye.png'
 
 const Card = ({ name, imageUrl, desc }) => {
     return (
@@ -15,9 +15,10 @@ const Card = ({ name, imageUrl, desc }) => {
         <div className={styles.infoWrapper}>
             <p class="">22&nbsp;октября&nbsp;2020&nbsp;г. 17:49</p>
             <div className={styles.eye}>
-
+                <img src={eye} alt=""/>
+                <p class="">500</p>
             </div>
-            <p class="">500</p>
+
         </div>
     </div>
     )

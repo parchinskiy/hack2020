@@ -22,6 +22,17 @@
     display: flex;
     justify-content: space-between;
 }
+
+.eye {
+    width: 55px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.eye img {
+    width: 16px;
+}
+
 .favorWrapper{
     z-index: 6;
 }
