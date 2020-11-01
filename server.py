@@ -3,6 +3,9 @@ from flask_cors import CORS, cross_origin
 from bs4 import BeautifulSoup
 import pandas, random, requests, re
 
+from .src.back.get_recomend_book_for_id import get_recomend_book_for_id
+from .src.back.get_popular_book import get_popular_book
+
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -64,12 +67,17 @@ def return_mock_data():
 def get_recomend_book_for_id():
     reader_id = request.values.get('readerId')
     evet_id   = request.values.get('eventId')
-    return json.jsonify(return_mock_data())
+    books = get_recomend_book_for_id(reader_id)
+    addational = [find_desc_for_book(book) for book in books]
+    data = []
+    for i in range(len(books)):
+        data.append({'name' : books[i], 'img_url' : addational[0], 'desc' : addational[1]})
+    return json.jsonify(data)
 
 @app.route('/api/getPopularBook')
 @cross_origin()
 def get_popular_book():
-    return json.jsonify(return_mock_data())
+    return json.jsonify(get_populat_book())
 
 @app.route('/api/getRecomendEventsForId', methods=['POST'])
 @cross_origin()
