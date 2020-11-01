@@ -1,16 +1,93 @@
-.Card {
+.card {
     display: flex;
-    flex-direction: column;
-    width: 33.3%;
+
     padding: .25rem;
     max-width: 500px;
+    height: 200px;
+    background-color: white;
     align-items: center;
+    border-radius: 25px;
+    margin: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cardWrapper {
+    width: 33.3%;
+}
+
+.infoWrapper {
+    color: grey;
+    margin: 5px 15px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+.favorWrapper{
+    z-index: 6;
+}
+
+.favorButton{
+    bottom: 10px;
+    width: 25px;
+    fill: white;
+    right: 15px;
+    position: absolute;
+    display: block;
+}
+
+.favorButton:hover{
+    width:35px;
+    right:10px;
+}
+
+.infoWrapper p {
+    margin: 0;
+}
+
+.card::after {
+    content: '';
+    background: rgba(0, 0, 0, 0.4);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    position: absolute;
+}
+
+.bookName {
+    z-index: 6;
+    display: block;
+    z-index: 6;
+    position: relative;
+    right: -50px;
+    top: -70px;
+    color:white;
+}
+
+.cardBg {
+    position: absolute;
+    filter: blur(15px);
+    z-index: 1;
+    width: 100%;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .cardImage {
     width: 200px;
     height: 300px;
     margin-bottom: 0.5rem;
+    max-width: 108px;
+    max-height: 168px;
+    z-index: 5;
+    position: relative;
+    left: 15px;
+    border-radius: 8px;
 }
 
 .cardDesc {

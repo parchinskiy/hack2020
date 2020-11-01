@@ -1,0 +1,12 @@
+
+.recomendBlockWrapper {
+    padding: 10px;
+    width:60%;
+}
+
+.recomendBlock {
+    height:250px;
+    background: linear-gradient(to top, #4BA0EE 50%, #76BAF1 100%);
+    display: flex;
+    border-radius: 10px;
+}

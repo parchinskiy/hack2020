@@ -1,3 +1,6 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
 .AppLogin {
   display: grid;
   place-items: center;
@@ -13,20 +16,52 @@
   background: linear-gradient(180deg, rgba(241,243,222,1) 0%, rgba(235,143,143,1) 100%);
 }
 
+.searchWrapper {
+  display:flex;
+  width: 40%;
+}
+
+.searchIcon {
+  padding-left: 10px;
+  position: absolute;
+  width: 25px;
+  display: inline-block;
+  top: 25px;
+  fill: #aeaeae;
+}
+
+.searchForm {
+  background-color: #eaeaea;
+  border: 0;
+  border-radius: 10px;
+  width: 100%;
+  color: #aeaeae;
+  text-align: center;
+}
+
+input[type="submit"] {
+  border: 0px
+}
+
 .App {
   display: flex;
-  
+
   flex-direction: column;
 
   align-items: center;
 
   width: 100vw;
   height: 100vh;
-  animation: backgroundLogin 1s ease;
-
-  background: linear-gradient(180deg, rgba(235,143,143,1) 0%, rgba(241,243,222,1) 100%);
 
   font-family: 'Playfair Display', serif;
+}
+
+.recomenTitle {
+  margin: 0px;
+}
+
+.recomenTitle H2 {
+  margin: 0px 10px;
 }
 
 .loginForm {
@@ -129,7 +164,7 @@
   border: 0;
 
   background-color: #f1f3de;
-  
+
   font-family: 'Playfair Display', serif;
 
   outline: none;
@@ -159,20 +194,11 @@
 
   justify-content: space-between;
 
-  width: 50%;
-
+  width: 60%;
+  height: 35px;
   padding-top: 2rem;
 
-  margin-bottom: 4rem;
-}
-
-@keyframes backgroundLogin {
-  0% {
-    background: linear-gradient(180deg, rgba(241,243,222,1) 0%, rgba(235,143,143,1) 100%);
-  }
-  100% {
-    background: linear-gradient(180deg, rgba(235,143,143,1) 0%, rgba(241,243,222,1) 100%);
-  }
+  margin-bottom: 25px;
 }
 
 .navBar {
@@ -181,40 +207,55 @@
   flex-direction: row;
 
   justify-content: space-between;
-
+  height: 35px;
   width: 35%;
 }
 
 .menuNavLink {
   border-radius: 1.5rem;
   text-decoration: none;
-  color: white;
   padding: .1rem 1.5rem .2rem 1.5rem;
+  color: black;
   display: flex;
   align-items: center;
   transition: .5s;
 }
 
 .menuNavLink:hover, .menuNavLinkActive {
-  color: white;
 
-  background-color:rgb(241,243,222, .5);
+  background-color:rgba(144, 145, 141, 0.192);
+}
+
+.recomenTitleWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 10px 10px 10px;
+}
+
+.recomenTitleWrapper a {
+  color: #0f5699;
+  text-decoration: none;
 }
 
 .userBlock {
-  color: white;
-
   display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  margin-right: 10px;
+}
 
-  flex-direction: column;
+
+.userBlock:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 .signOutButton {
+  color: black;
   cursor: pointer;
   transition: .25s;
-
+  padding: 7px 15px 0px 15px;
   text-decoration: none;
-  color: white;
 }
 
 .signOutButton:hover {
@@ -225,13 +266,13 @@
   display: flex;
   flex-direction: column;
 
-  width: 50%;
+  width: 60%;
 
   justify-items: flex-start;
 }
 
 .booksBlock {
- display: flex; 
+ display: flex;
  flex-direction: column;
 
 
